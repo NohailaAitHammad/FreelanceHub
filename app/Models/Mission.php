@@ -6,17 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mission extends Model
 {
-    protected $fillable = ['title', 'description', 'budget', 'category', 'duration', 'status', 'client', 'deleted_at'];
+    protected $fillable = ['title', 'description', 'budget', 'category_id', 'duration', 'status', 'user_id', 'deleted_at'];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function client()
+
+
+    public function user()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(User::class);
     }
+
+
 
     protected function casts()
     {

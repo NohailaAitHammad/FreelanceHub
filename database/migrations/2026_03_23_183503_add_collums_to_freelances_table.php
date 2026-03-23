@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('freelances', function (Blueprint $table) {
+            $table->string('rating_average')->default('0.00');
+            $table->string('rating_count')->default('0');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('freelances', function (Blueprint $table) {
+            $table->dropColumn('rating_average');
+            $table->dropColumn('rating_count');
+        });
+    }
+};

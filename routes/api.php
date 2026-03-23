@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ClientController;
 use App\Http\Controllers\API\FreelanceController;
+use App\Http\Controllers\API\MissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,3 +15,4 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 
 Route::apiResource("clients", ClientController::class)->middleware("auth:sanctum");
 Route::apiResource("freelances", FreelanceController::class)->middleware("auth:sanctum");
+Route::apiResource("missions", MissionController::class)->middleware("auth:sanctum");

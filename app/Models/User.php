@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         $this->hasOne(Freelance::class);
     }
+
+    public function missions()
+    {
+        return $this->hasMany(Mission::class);
+    }
 }
