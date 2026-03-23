@@ -21,7 +21,6 @@ class AuthService
            $data['role_id'] = 9;
            $user = User::create($data);
            $token = $user->createToken('my_app_token')->plainTextToken;
-           $user->load('freelance');
            $freelance = Freelance::create(['user_id' => $user->id]);
 
         }else {
