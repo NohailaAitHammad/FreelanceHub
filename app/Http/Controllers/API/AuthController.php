@@ -63,4 +63,12 @@ class AuthController extends Controller
             'message' => "Deconnexion reusiie"
         ]);
     }
+
+    public function user(Request $request){
+        return response()->json([
+            "success" => true,
+            "message" => "Profile utilisateur",
+            "data" => $request->user()
+        ]);
+    }
 }

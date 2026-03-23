@@ -1,24 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Competence;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CompetenceController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
     {
         //
     }
@@ -34,15 +26,7 @@ class CompetenceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Competence $competence)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Competence $competence)
+    public function show(string $id)
     {
         //
     }
@@ -50,7 +34,7 @@ class CompetenceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Competence $competence)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +42,7 @@ class CompetenceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Competence $competence)
+    public function destroy(string $id)
     {
         //
     }
