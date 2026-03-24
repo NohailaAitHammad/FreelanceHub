@@ -18,31 +18,31 @@ class TechnologyService
         return  Technology::create($data);
     }
 
-    public function showDetailTechnology($competence)
+    public function showDetailTechnology($technology)
     {
-        if(!Competence::findOrFail($competence->id)){
+        if(!Technology::findOrFail($technology->id)){
             abort(404, "Introuvable");
         }
-        return $competence;
+        return $technology;
     }
 
-    public function modifierCompetence($data, $competence)
+    public function modifierTechnology($data, $technology)
     {
-        if(!Competence::findOrFail($competence->id)){
+        if(!Technology::findOrFail($technology->id)){
             abort(404, "Introuvable");
         }
 
-        $competence->nom = $data["name"];
-        $competence->save();
-        return $competence;
+        $technology->name = $data["name"];
+        $technology->save();
+        return $technology;
     }
 
-    public function supprimerCompetence(Competence $competence)
+    public function supprimerTechnology(Technology $technology)
     {
-        if(!Competence::findOrFail($competence->id)){
+        if(!Technology::findOrFail($technology->id)){
             abort(404, "Introuvable");
         }
-        return $competence->delete();
+        return $technology->delete();
 
     }
 }

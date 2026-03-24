@@ -31,7 +31,7 @@ class CompetenceService
             abort(404, "Introuvable");
         }
 
-        $competence->nom = $data["name"];
+        $competence->name = $data["name"];
         $competence->save();
         return $competence;
     }
