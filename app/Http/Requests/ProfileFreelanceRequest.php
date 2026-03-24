@@ -26,6 +26,11 @@ class ProfileFreelanceRequest extends FormRequest
             "bio" => ["sometimes", "required", "string", 'max:255'],
             "experience" => ["sometimes", "required", "int", 'min:0'],
             "availability" => ["sometimes", "required", "bool"],
+            'competences' => ['required','array'],
+            'competences.*' => ['exists:competences,id'],
+
+            'technologies' => ['required','array'],
+            'technologies.*' => ['exists:technologies,id']
         ];
     }
 }

@@ -12,7 +12,7 @@ class ClientService
 
     public function showClientInfo(Client $client)
     {
-        return $client->with("user")->get();
+        return $client->with("user", "category")->get();
     }
 
     public  function  editClientProfile(array $data, Client $client)
@@ -46,7 +46,7 @@ class ClientService
             return Mission::where('user_id', $user->id)
                 ->select([
                     'id', 'title', 'description', 'budget', 'category_id', 'user_id'
-                ])
+                ])->with("user", "category")
                 ->latest()->paginate(5);
         }
 

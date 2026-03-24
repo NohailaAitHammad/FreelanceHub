@@ -8,8 +8,10 @@ class Technology extends Model
 {
     protected $fillable = ['nom', 'deleted_at'];
 
-    public function freelances()
+    public function freelance()
     {
-        return $this->belongsToMany(Freelance::class);
+        return $this->belongsToMany(Freelance::class,
+            "freelance_technologie", "technology_id", "freelance_id");
+
     }
 }

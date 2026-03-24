@@ -61,7 +61,7 @@ class FreelanceController extends Controller
     public function update(ProfileFreelanceRequest $request, Freelance $freelance)
     {
         $validated= $request->validated();
-        $freelance = $this->freelanceService->editFreelanceProfile($validated,$freelance);
+       $freelance = $this->freelanceService->editFreelanceProfile($validated,$freelance);
         return response()->json([
             "success" => true,
             "message" => "Freelance Profile edite avec success",
