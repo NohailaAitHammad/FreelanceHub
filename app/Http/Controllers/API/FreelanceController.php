@@ -7,6 +7,7 @@ use App\Http\Requests\ProfileFreelanceRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Client;
 use App\Models\Freelance;
+use App\Models\Mission;
 use App\Services\ClientService;
 use App\Services\FreelanceService;
 use Illuminate\Http\Request;
@@ -81,4 +82,6 @@ class FreelanceController extends Controller
             "data" => $freelance
         ]);
     }
+
+
 }

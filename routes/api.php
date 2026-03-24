@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CandidatureController;
 use App\Http\Controllers\API\ClientController;
 use App\Http\Controllers\API\CompetenceController;
 use App\Http\Controllers\API\FreelanceController;
@@ -18,5 +19,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::apiResource("clients", ClientController::class)->middleware("auth:sanctum");
 Route::apiResource("freelances", FreelanceController::class)->middleware("auth:sanctum");
 Route::apiResource("missions", MissionController::class)->middleware("auth:sanctum");
+Route::post("/missions/{mission}/apply", [MissionController::class, 'applyAuMissionParCandidature'])->middleware("auth:sanctum");
 Route::apiResource("competences", CompetenceController::class)->middleware("auth:sanctum");
 Route::apiResource("technologies", TechnologyController::class)->middleware("auth:sanctum");
+Route::put("/candidatures/{candidature}/accept", [CandidatureController::class, 'accepeteCondidature'])->middleware("auth:sanctum");
+Route::put("/candidatures/{candidature}/reject", [CandidatureController::class, 'rejectCondidature'])->middleware("auth:sanctum");

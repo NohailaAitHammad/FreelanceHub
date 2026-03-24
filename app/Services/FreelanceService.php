@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Freelance;
+use App\Models\Mission;
 
 class FreelanceService
 {
@@ -32,4 +33,6 @@ class FreelanceService
     {
         return $freelance->delete();
     }
+
+
 }

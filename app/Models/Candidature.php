@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Candidature extends Model
 {
-    protected $fillable = ['motivation_letter', 'proposed_rate', 'status', 'mission', 'freelance'];
+    protected $fillable = ['motivation_letter', 'proposed_rate', 'status', 'mission_id', 'freelance_id'];
 
     public function freelance()
     {

@@ -1,20 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
+use App\Models\Freelance;
+use Validator;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CandidatureRequest;
 use App\Http\Requests\MissionRequest;
 use App\Models\Mission;
+use App\Services\CandidatureService;
 use App\Services\ClientService;
+use App\Services\FreelanceService;
 use Illuminate\Http\Request;
 
 class MissionController extends Controller
 {
-    private  ClientService $clientService;
 
-    public function __construct(ClientService $clientService)
+    private  ClientService $clientService;
+    private  CandidatureService $candidatureService;
+
+    public function __construct(ClientService $clientService,  CandidatureService $candidatureService)
     {
         $this->clientService = $clientService;
+        $this->candidatureService = $candidatureService;
     }
 
     /**
@@ -89,4 +96,20 @@ class MissionController extends Controller
             "data" => $mission
         ]);
     }
+
+
+    public function applyAuMissionParCandidature(CandidatureRequest $request, Mission $mission)
+    {
+        $validated = $request->validated();
+
+       $candidature = $this->candidatureService->apply($validated, $mission);
+        return response()->json([
+            "success" => true,
+            "message" => "Candidature enregister avec success",
+            "data" => $candidature
+        ]);
+    }
+
+
+
 }

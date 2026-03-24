@@ -9,7 +9,6 @@ use App\Models\User;
 
 class ClientService
 {
-
     public function showClientInfo(Client $client)
     {
         return $client->with("user", "category")->get();
