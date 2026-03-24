@@ -22,5 +22,6 @@ Route::apiResource("missions", MissionController::class)->middleware("auth:sanct
 Route::post("/missions/{mission}/apply", [MissionController::class, 'applyAuMissionParCandidature'])->middleware("auth:sanctum");
 Route::apiResource("competences", CompetenceController::class)->middleware("auth:sanctum");
 Route::apiResource("technologies", TechnologyController::class)->middleware("auth:sanctum");
+Route::apiResource("candidatures", CandidatureController::class)->middleware("auth:sanctum");
 Route::put("/candidatures/{candidature}/accept", [CandidatureController::class, 'accepeteCondidature'])->middleware("auth:sanctum");
 Route::put("/candidatures/{candidature}/reject", [CandidatureController::class, 'rejectCondidature'])->middleware("auth:sanctum");

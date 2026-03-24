@@ -57,11 +57,11 @@ class User extends Authenticatable
 
     public function client()
     {
-        $this->hasOne(Client::class);
+     return   $this->hasOne(Client::class);
     }
     public function freelance()
     {
-        $this->hasOne(Freelance::class);
+      return  $this->hasOne(Freelance::class);
     }
 
     public function missions()
