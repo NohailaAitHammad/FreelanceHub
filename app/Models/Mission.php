@@ -13,6 +13,11 @@ class Mission extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function candidatures()
+    {
+        return $this->hasMany(Candidature::class);
+    }
+
 
 
     public function user()

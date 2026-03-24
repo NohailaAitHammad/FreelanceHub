@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
-    protected $fillable = ['rating', 'comment', 'reviewed_id', 'reviewer_id','deleted_at'];
+    protected $fillable = ['rating', 'comment','mission_id', 'reviewed_id', 'reviewer_id','deleted_at'];
 
     public function client()
     {
@@ -26,6 +26,11 @@ class Review extends Model
     public function reviewed()
     {
         return $this->belongsTo(User::class, 'reviewed_id');
+    }
+
+    public function mission()
+    {
+        return $this->belongsTo(Mission::class);
     }
 
     protected function casts()
