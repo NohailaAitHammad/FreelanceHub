@@ -68,4 +68,25 @@ class User extends Authenticatable
     {
         return $this->hasMany(Mission::class);
     }
+
+    public function reviewsGiven()
+    {
+        return $this->hasMany(Review::class, 'reviewer_id');
+    }
+
+    public function reviewsReceived()
+    {
+        return $this->hasMany(Review::class, 'reviewed_id');
+    }
+
+    public function competences()
+    {
+        return $this->belongsToMany(Competence::class);
+    }
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class);
+    }
+
 }

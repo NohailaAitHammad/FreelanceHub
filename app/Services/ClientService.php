@@ -96,15 +96,14 @@ class ClientService
     }
 
 
-    public function noterFreelance($freelance, $data)
+    public function noterFreelance($mission, $user, $freelance)
     {
-        $ar = [];
-        $ar.push($data['rating']);
-        Review::create(['comment' => $data['comment'],
-            'rating' => $this->noteMoyenne($data)
-        ]);
-
-
+        if($mission->user_id !== $user->id){
+            abort(403, "unauthorised, cette mission pas a vous");
+        }
+        if($mission->status !== "completed" ){
+            abort(403, "unauthorised, Vous pouvez pas donner une note au freelance");
+        }
 
     }
 

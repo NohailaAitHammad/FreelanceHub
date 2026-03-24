@@ -13,10 +13,7 @@ class Freelance extends Model
       return  $this->belongsTo(User::class);
     }
 
-    public function competences()
-    {
-        return $this->belongsToMany(Competence::class);
-    }
+
 
     public function reviewsGiven()
     {
@@ -26,10 +23,6 @@ class Freelance extends Model
     public function reviewsReceived()
     {
         return $this->hasMany(Review::class, 'reviewed_id');
-    }
-    public function technologies()
-    {
-        return $this->belongsToMany(Technology::class);
     }
 
     protected function casts()

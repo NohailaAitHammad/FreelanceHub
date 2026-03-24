@@ -8,9 +8,9 @@ class Competence extends Model
 {
     protected $fillable = ['nom', 'deleted_at'];
 
-    public function freelances()
+    public function user()
     {
-        return $this->belongsToMany(Freelance::class);
+        return $this->belongsToMany(User::class);
     }
 
 }

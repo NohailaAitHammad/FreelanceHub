@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('rating')->nullable();
             $table->string('comment')->nullable();
-            $table->foreignId('client_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('freelance_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('reviewer_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('reviewed_id')->constrained('users')->cascadeOnDelete();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
