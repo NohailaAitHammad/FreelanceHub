@@ -4,8 +4,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Freelance;
 use App\Services\ReviewService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Validator;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller  as BaseController;
 use App\Http\Requests\CandidatureRequest;
 use App\Http\Requests\MissionRequest;
 use App\Models\Mission;
@@ -14,9 +15,9 @@ use App\Services\ClientService;
 use App\Services\FreelanceService;
 use Illuminate\Http\Request;
 
-class MissionController extends Controller
+class MissionController extends BaseController
 {
-
+    use AuthorizesRequests;
     private  ClientService $clientService;
     private  CandidatureService $candidatureService;
     private  ReviewService $reviewService;
@@ -52,6 +53,7 @@ class MissionController extends Controller
      */
     public function store(MissionRequest $request)
     {
+        $this->authorize('create');
         $validated = $request->validated();
         $mission = $this->clientService->ajouterMission($validated);
         return response()->json([
@@ -64,6 +66,7 @@ class MissionController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(Mission $mission)
     {
         $mission = $this->clientService->showMissionDetail($mission);
@@ -77,8 +80,10 @@ class MissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(MissionRequest $request, Mission $mission)
     {
+        $this->authorize('update', $mission);
         $validated = $request->validated();
         $mission = $this->clientService->modifierModifier($validated,$mission);
         return response()->json([
@@ -91,8 +96,11 @@ class MissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Mission $mission)
     {
+        $this->authorize('delete', $mission);
+
         $this->clientService->supprimerMission($mission);
         return response()->json([
             "success" => true,
@@ -104,6 +112,8 @@ class MissionController extends Controller
 
     public function applyAuMissionParCandidature(CandidatureRequest $request, Mission $mission)
     {
+        $this->authorize('applyAuMissionParCandidature', $mission);
+
         $validated = $request->validated();
 
        $candidature = $this->candidatureService->apply($validated, $mission);
@@ -116,6 +126,7 @@ class MissionController extends Controller
 
     public function reviewFreelance(ReviewRequest $request, Mission $mission)
     {
+        $this->authorize('reviewFreelance', $mission);
         $validated = $request->validated();
         $review = $this->reviewService->addReview($validated, $mission);
         return response()->json([
@@ -127,6 +138,8 @@ class MissionController extends Controller
 
     public function reviewClient(ReviewRequest $request, Mission $mission)
     {
+        $this->authorize('reviewClient', $mission);
+
         $validated = $request->validated();
         $review = $this->reviewService->addReview($validated, $mission);
         return response()->json([
@@ -135,6 +148,5 @@ class MissionController extends Controller
             "data" => $review
         ]);
     }
-
 
 }

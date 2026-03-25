@@ -7,23 +7,25 @@ use App\Http\Controllers\API\CompetenceController;
 use App\Http\Controllers\API\FreelanceController;
 use App\Http\Controllers\API\MissionController;
 use App\Http\Controllers\API\TechnologyController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
 Route::post('/client/registerClient', [AuthController::class, 'registerClient']);
 Route::post('/client/registerFreelance', [AuthController::class, 'registerFreelance']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::apiResource("clients", ClientController::class)->middleware("auth:sanctum");
-Route::apiResource("freelances", FreelanceController::class)->middleware("auth:sanctum");
-Route::apiResource("missions", MissionController::class)->middleware("auth:sanctum");
-Route::post("/missions/{mission}/apply", [MissionController::class, 'applyAuMissionParCandidature'])->middleware("auth:sanctum");
-Route::post("/missions/{mission}/reviewFreelance", [MissionController::class, 'reviewFreelance'])->middleware("auth:sanctum");
-Route::post("/missions/{mission}/reviewClient", [MissionController::class, 'reviewClient'])->middleware("auth:sanctum");
-Route::apiResource("competences", CompetenceController::class)->middleware("auth:sanctum");
-Route::apiResource("technologies", TechnologyController::class)->middleware("auth:sanctum");
-Route::apiResource("candidatures", CandidatureController::class)->middleware("auth:sanctum");
-Route::put("/candidatures/{candidature}/accept", [CandidatureController::class, 'accepeteCondidature'])->middleware("auth:sanctum");
-Route::put("/candidatures/{candidature}/reject", [CandidatureController::class, 'rejectCondidature'])->middleware("auth:sanctum");
+Route::middleware("auth:sanctum")->group(function(){
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource("clients", ClientController::class);
+    Route::apiResource("freelances", FreelanceController::class);
+    Route::apiResource("missions", MissionController::class);
+    Route::post("/missions/{mission}/apply", [MissionController::class, 'applyAuMissionParCandidature']);
+    Route::post("/missions/{mission}/reviewFreelance", [MissionController::class, 'reviewFreelance']);
+    Route::post("/missions/{mission}/reviewClient", [MissionController::class, 'reviewClient']);
+    Route::apiResource("competences", CompetenceController::class);
+    Route::apiResource("technologies", TechnologyController::class);
+    Route::apiResource("candidatures", CandidatureController::class);
+    Route::put("/candidatures/{candidature}/accept", [CandidatureController::class, 'acceptCandidature']);
+    Route::put("/candidatures/{candidature}/reject", [CandidatureController::class, 'rejectCandidature']);
+});
+

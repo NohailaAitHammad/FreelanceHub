@@ -7,10 +7,12 @@ use App\Http\Requests\CondidatureRequest;
 use App\Models\Candidature;
 use App\Models\Mission;
 use App\Services\CandidatureService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class CandidatureController extends Controller
 {
+    use AuthorizesRequests;
     private  CandidatureService $candidatureService;
 
     public function __construct(CandidatureService $candidatureService)
@@ -63,28 +65,30 @@ class CandidatureController extends Controller
         //
     }
 
-    public function  accepeteCondidature(Request $request, Candidature $candidature)
+    public function  acceptCandidature(Request $request, Candidature $candidature)
     {
+        $this->authorize('accept', $candidature);
         $candidature = $this->candidatureService->accept($candidature);
 
         return response()->json([
             "success" => true,
-            "message" => "Condidature accepter",
+            "message" => "Candidature accepter",
             "data" => [
-                "condidature" => $candidature->with('mission')->first()
+                "Candidature" => $candidature->with('mission')->first()
             ]
         ]);
     }
 
-    public function  rejectCondidature(Request $request, Candidature $candidature)
+    public function  rejectCandidature(Request $request, Candidature $candidature)
     {
+        $this->authorize('reject', $candidature);
         $this->candidatureService->reject($candidature);
 
         return response()->json([
             "success" => true,
-            "message" => "Condidature rejeter",
+            "message" => "Candidature rejeter",
             "data" => [
-                "condidature" => $candidature
+                "Candidature" => $candidature
             ]
         ]);
     }
