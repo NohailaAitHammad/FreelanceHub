@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $fillable = ['company', 'description', 'user_id', 'deleted_at'];
+    protected $fillable = ['company', 'description', 'user_id', 'deleted_at', 'rating_average'];
 
 
     public function user()
@@ -15,5 +15,11 @@ class Client extends Model
     }
 
 
+    protected function casts(): array
+    {
+        return [
+            'rating_average' => "float"
+        ];
+    }
 
 }

@@ -10,7 +10,7 @@ class Candidature extends Model
 
     public function freelance()
     {
-        return $this->belongsTo(Freelance::class);
+        return $this->belongsTo(Freelance::class, 'freelance_id');
     }
 
     public function mission()

@@ -30,9 +30,10 @@ class CandidatureService
 
     public function accept(Candidature $candidature)
     {
-        $candidature->mission->status = "in_progress";
+       $candidature=   $this->modifierStatusCnadidature($candidature, "accepted");
+        $candidature->mission->status = "completed";
         $candidature->mission->save();
-       return  $this->modifierStatusCnadidature($candidature, "accepted");
+        return $candidature;
         //$candidature->status = "accepted";
         //return $candidature->save();
     }
@@ -48,7 +49,8 @@ class CandidatureService
     public function modifierStatusCnadidature(Candidature $candidature, string $status)
     {
         $candidature->status = $status;
-        return $candidature->save();
+         $candidature->save();
+         return $candidature;
     }
 
 }

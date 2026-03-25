@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\API;
+use App\Http\Requests\ReviewRequest;
 use App\Models\Freelance;
+use App\Services\ReviewService;
 use Validator;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CandidatureRequest;
@@ -17,11 +19,13 @@ class MissionController extends Controller
 
     private  ClientService $clientService;
     private  CandidatureService $candidatureService;
+    private  ReviewService $reviewService;
 
-    public function __construct(ClientService $clientService,  CandidatureService $candidatureService)
+    public function __construct(ClientService $clientService,  CandidatureService $candidatureService, ReviewService $reviewService)
     {
         $this->clientService = $clientService;
         $this->candidatureService = $candidatureService;
+        $this->reviewService = $reviewService;
     }
 
     /**
@@ -110,6 +114,27 @@ class MissionController extends Controller
         ]);
     }
 
+    public function reviewFreelance(ReviewRequest $request, Mission $mission)
+    {
+        $validated = $request->validated();
+        $review = $this->reviewService->addReview($validated, $mission);
+        return response()->json([
+            "success" => true,
+            "message" => "Avis Ajouter",
+            "data" => $review
+        ]);
+    }
+
+    public function reviewClient(ReviewRequest $request, Mission $mission)
+    {
+        $validated = $request->validated();
+        $review = $this->reviewService->addReview($validated, $mission);
+        return response()->json([
+            "success" => true,
+            "message" => "Avis Ajouter",
+            "data" => $review
+        ]);
+    }
 
 
 }

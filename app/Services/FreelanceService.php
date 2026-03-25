@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Freelance;
 use App\Models\Mission;
+use App\Models\User;
 
 class FreelanceService
 {
@@ -32,6 +33,25 @@ class FreelanceService
     public function deleteFreelance($freelance)
     {
         return $freelance->delete();
+    }
+
+
+    public function addAverageRating(User $user)
+    {
+        $average = $user->reviewsReceived()->avg('rating');
+
+        if($user->role->role === "freelance") {
+
+            $user->freelance->rating_average = round($average, 1);
+            return $user->freelance->save();
+
+        }else {
+
+           // $user->client->rating_average = round($average, 1);
+            //return $user->client->save();
+            return $user;
+
+        }
     }
 
 

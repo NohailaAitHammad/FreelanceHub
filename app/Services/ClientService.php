@@ -106,6 +106,13 @@ class ClientService
 
     }
 
+    public function addAverageRating(User $user)
+    {
+        $average = $user->reviewsReceived()->avg('rating');
+        $user->client->rating_average = round($average, 1);
+        return $user->client->save();
+    }
+
     public function noteMoyenne(array $datas)
     {
         $somme = 0;

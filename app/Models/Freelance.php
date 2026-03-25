@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Freelance extends Model
 {
@@ -34,6 +35,11 @@ class Freelance extends Model
     public function reviewsReceived()
     {
         return $this->hasMany(Review::class, 'reviewed_id');
+    }
+
+    public function candidatures(): HasMany
+    {
+        return $this->hasMany(Candidature::class);
     }
 
     protected function casts()

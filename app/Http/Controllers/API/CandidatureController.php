@@ -65,7 +65,7 @@ class CandidatureController extends Controller
 
     public function  accepeteCondidature(Request $request, Candidature $candidature)
     {
-        $this->candidatureService->accept($candidature);
+        $candidature = $this->candidatureService->accept($candidature);
 
         return response()->json([
             "success" => true,

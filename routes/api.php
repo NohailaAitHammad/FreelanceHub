@@ -20,6 +20,8 @@ Route::apiResource("clients", ClientController::class)->middleware("auth:sanctum
 Route::apiResource("freelances", FreelanceController::class)->middleware("auth:sanctum");
 Route::apiResource("missions", MissionController::class)->middleware("auth:sanctum");
 Route::post("/missions/{mission}/apply", [MissionController::class, 'applyAuMissionParCandidature'])->middleware("auth:sanctum");
+Route::post("/missions/{mission}/reviewFreelance", [MissionController::class, 'reviewFreelance'])->middleware("auth:sanctum");
+Route::post("/missions/{mission}/reviewClient", [MissionController::class, 'reviewClient'])->middleware("auth:sanctum");
 Route::apiResource("competences", CompetenceController::class)->middleware("auth:sanctum");
 Route::apiResource("technologies", TechnologyController::class)->middleware("auth:sanctum");
 Route::apiResource("candidatures", CandidatureController::class)->middleware("auth:sanctum");
