@@ -23,9 +23,9 @@ class CandidatureController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $candidatures = $this->candidatureService->getAllCandidatures();
+        $candidatures = $this->candidatureService->getAllCandidatures($request);
         return response()->json([
             "success" => true,
             "message" => "Listes des condidatures",
@@ -74,7 +74,8 @@ class CandidatureController extends Controller
             "success" => true,
             "message" => "Candidature accepter",
             "data" => [
-                "Candidature" => $candidature->with('mission')->first()
+                "Candidature" => $candidature,
+
             ]
         ]);
     }

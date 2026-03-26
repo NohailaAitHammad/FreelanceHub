@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Freelance;
+use App\Models\User;
 use App\Services\ReviewService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller  as BaseController;
 use App\Http\Requests\CandidatureRequest;
@@ -53,7 +55,7 @@ class MissionController extends BaseController
      */
     public function store(MissionRequest $request)
     {
-        $this->authorize('create');
+        $this->authorize('create', Mission::class);
         $validated = $request->validated();
         $mission = $this->clientService->ajouterMission($validated);
         return response()->json([
@@ -73,7 +75,8 @@ class MissionController extends BaseController
         return response()->json([
             "success" => true,
             "message" => "Detail de la mission",
-            "data" => $mission
+            "data" => ["mission" => $mission,
+                "notification" => auth()->user()->notifications]
         ]);
     }
 
@@ -116,11 +119,14 @@ class MissionController extends BaseController
 
         $validated = $request->validated();
 
+
        $candidature = $this->candidatureService->apply($validated, $mission);
+       $user =User::find( $candidature->mission->user_id);
         return response()->json([
+
             "success" => true,
             "message" => "Candidature enregister avec success",
-            "data" => $candidature
+            "data" =>$user->unreadNotifications()->count()
         ]);
     }
 

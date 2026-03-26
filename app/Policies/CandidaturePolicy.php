@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Candidature;
+use App\Models\Mission;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -68,9 +69,9 @@ class CandidaturePolicy
     }
 
 
-    public function apply(User $user, Candidature $candidature)
+    public function applyAuMissionParCandidature(User $user, Mission $mission)
     {
-        return $user->role->role === "freelance" &&  $candidature->status === "open";
+        return $user->role->role === "freelance" &&  $mission->status === "open";
     }
 
     public function accept(User $user, Candidature $candidature)

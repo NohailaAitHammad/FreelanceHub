@@ -2,21 +2,28 @@
 
 namespace App\Services;
 
+use App\Http\Requests\ProfileRequest;
 use App\Models\Candidature;
 use App\Models\Freelance;
 use App\Models\Mission;
+use App\Models\User;
+use App\Notifications\CandidatureStatusNotification;
 use Illuminate\Contracts\Database\ModelIdentifier;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use League\Uri\Contracts\Conditionable;
 
 class CandidatureService
 {
-    //private  Mission
 
-    public function getAllCandidatures()
+    public function getAllCandidatures(Request $request)
     {
-        return Candidature::where("freelance_id", auth()->user()->freelance->with('user')->first()->id)
-            ->where("status", "pending")
-            ->get();
+        $candidatures = Candidature::where("freelance_id", auth()->user()->freelance->with('user')->first()->id)->get();
+        if($request->has('status')){
+            $candidatures->where("status", $request->status);
+        }
+
+        return $candidatures;
     }
 
     public function apply($data, Mission $mission)
@@ -25,6 +32,8 @@ class CandidatureService
         $data["freelance_id"] = Freelance::where("user_id", auth()->id())->first()->id;
         $data['status'] = "pending";
         $candidature =  Candidature::create($data);
+        $user =User::find( $candidature->mission->user_id);
+        Notification::send($user, new CandidatureStatusNotification($candidature));
         return $candidature->with('freelance', "mission")->first();
     }
 
@@ -33,6 +42,7 @@ class CandidatureService
        $candidature=   $this->modifierStatusCnadidature($candidature, "accepted");
         $candidature->mission->status = "completed";
         $candidature->mission->save();
+        Notification::send(auth()->user(), new CandidatureStatusNotification($candidature));
         return $candidature;
         //$candidature->status = "accepted";
         //return $candidature->save();
@@ -40,10 +50,9 @@ class CandidatureService
 
     public function reject(Candidature $candidature)
     {
-        return  $this->modifierStatusCnadidature($candidature, "rejected");
-
-        //$candidature->status = "rejected";
-        //return $candidature->save();
+        $candidature = $this->modifierStatusCnadidature($candidature, "rejected");
+        Notification::send(auth()->user(), new CandidatureStatusNotification($candidature));
+        return $candidature;
     }
 
     public function modifierStatusCnadidature(Candidature $candidature, string $status)

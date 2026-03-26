@@ -40,8 +40,14 @@ class ClientService
 
     public function voirTousMesMissions($user)
     {
+        /*
+         * $query = Mission::query()
+            ->when($request->status, fn($q) => $q->where('statut', $request->status))
+            ->when($request->categorie, fn($q) => $q->where('categorie', $request->categorie))
+            ->when($request->min_budget, fn($q) => $q->where('budget', '>=', $request->min_budget))
+            ->when($request->max_budget, fn($q) => $q->where('budget', '<=', $request->max_budget));
+         */
         if($user->role->role === "client") {
-            //return $user->missions;
             return Mission::where('user_id', $user->id)
                 ->select([
                     'id', 'title', 'description', 'budget', 'category_id', 'user_id'
